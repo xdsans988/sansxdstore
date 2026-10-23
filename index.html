@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANSXD STORE 8BP</title>
+<style>
+:root{--purple:#8b5cf6;--blue:#38bdf8;--white:#f8fafc;--black:#070816;--panel:#111329;--muted:#aab2d5}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(ellipse at 15% 10%,rgba(139,92,246,.30),transparent 38%),radial-gradient(ellipse at 90% 30%,rgba(56,189,248,.20),transparent 35%),linear-gradient(145deg,#050510,#10112a 55%,#070816);color:var(--white);display:flex;justify-content:center;align-items:center;padding:18px;overflow-x:hidden}
+.container{width:100%;max-width:470px;position:relative;background:linear-gradient(145deg,rgba(20,21,48,.97),rgba(8,9,24,.98));border:1px solid rgba(139,92,246,.65);border-radius:24px;padding:24px;box-shadow:0 0 35px rgba(139,92,246,.18),0 0 70px rgba(56,189,248,.08);animation:rise .7s ease both}
+.container:before{content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;background:linear-gradient(135deg,var(--purple),var(--blue),transparent 70%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+@keyframes rise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.brand{width:100%;text-align:center;padding:17px 12px;margin-bottom:15px;border-radius:16px;background:linear-gradient(110deg,rgba(139,92,246,.17),rgba(56,189,248,.12));border:1px solid rgba(255,255,255,.12);font-weight:900;letter-spacing:1.5px;font-size:22px;line-height:1.35;text-shadow:0 0 18px rgba(56,189,248,.35)}
+.brand span{display:block;font-size:11px;letter-spacing:4px;color:var(--blue);margin-top:4px}
+h1{text-align:center;font-size:20px;letter-spacing:2px;background:linear-gradient(90deg,#c4b5fd,#7dd3fc,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:7px}
+.subtitle{text-align:center;color:var(--muted);font-size:12px;margin-bottom:22px}
+.section-title{font-size:12px;letter-spacing:1.4px;margin:18px 0 10px;color:#c4b5fd;font-weight:bold}
+.engine-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.engine-option{position:relative}.engine-option input{position:absolute;opacity:0}
+.engine-option label{display:block;text-align:center;padding:18px 8px;background:linear-gradient(145deg,#171832,#0e1024);border:1px solid #33365c;border-radius:14px;cursor:pointer;font-weight:800;font-size:14px;transition:.22s;box-shadow:0 5px 15px #0002}
+.engine-option label:hover{transform:translateY(-2px);border-color:var(--blue)}
+.engine-option input:checked+label{border:1px solid var(--blue);background:linear-gradient(135deg,rgba(139,92,246,.28),rgba(56,189,248,.18));box-shadow:0 0 20px rgba(56,189,248,.17);color:#fff}
+#plansPanel{display:none;margin-top:18px;animation:rise .3s ease both}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plan{position:relative}.plan input{position:absolute;opacity:0}
+.plan label{display:block;padding:14px 8px;text-align:center;background:#101226;border:1px solid #303454;border-radius:12px;cursor:pointer;min-height:69px;transition:.2s}
+.plan label:hover{border-color:#8b5cf6;transform:translateY(-2px)}
+.plan input:checked+label{border:1px solid #a78bfa;background:linear-gradient(140deg,rgba(139,92,246,.25),rgba(56,189,248,.13));box-shadow:0 0 16px rgba(139,92,246,.14)}
+.plan-name{display:block;font-weight:bold;font-size:13px;margin-bottom:7px}
+.price{display:block;color:#7dd3fc;font-weight:800;font-size:13px}
+.buy-button{width:100%;margin-top:18px;padding:16px;border:0;border-radius:13px;background:linear-gradient(100deg,#8b5cf6,#3b82f6,#38bdf8);color:#fff;font-size:15px;letter-spacing:1px;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(59,130,246,.22);transition:.2s}
+.buy-button:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.footer{text-align:center;font-size:10px;letter-spacing:2px;color:#777fa8;margin-top:20px}
+.payment{display:none;margin-top:22px;padding-top:20px;border-top:1px solid #303454;text-align:center;animation:rise .35s ease both}
+.payment h2{color:#c4b5fd;font-size:19px;letter-spacing:1px;margin-bottom:10px}
+.payment-info{color:#dbeafe;font-size:13px;line-height:1.9;margin-bottom:13px}
+.timer-box{border:1px solid rgba(56,189,248,.35);background:rgba(56,189,248,.08);border-radius:12px;padding:10px;margin:12px 0;color:#bae6fd;font-size:12px}
+#countdown{font-size:21px;font-weight:900;letter-spacing:2px;display:block;margin-top:4px;color:#fff}
+.qris-image{display:none;width:100%;max-width:260px;margin:15px auto;padding:10px;background:white;border-radius:12px;box-shadow:0 0 25px rgba(56,189,248,.16)}
+.payment-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}
+.method-button{padding:12px 5px;border:1px solid #45496d;border-radius:10px;background:#111329;color:#e2e8f0;font-weight:900;font-size:12px;cursor:pointer}
+.method-button.active{border-color:#38bdf8;background:linear-gradient(135deg,rgba(139,92,246,.35),rgba(56,189,248,.22));box-shadow:0 0 15px rgba(56,189,248,.15)}
+.method-panel{display:none;padding:14px 10px;border:1px solid #303454;border-radius:12px;background:rgba(7,8,22,.55)}
+.method-panel.active{display:block}
+.method-detail{font-size:14px;line-height:1.9;color:#e2e8f0;margin:10px 0}
+.download-button{display:inline-block;text-decoration:none;margin:8px auto 4px;padding:12px 16px;border-radius:10px;background:linear-gradient(100deg,#8b5cf6,#3b82f6,#38bdf8);color:white;font-size:12px;font-weight:900}
+.copy-button{padding:9px 12px;border:1px solid #38bdf8;border-radius:8px;background:transparent;color:#bae6fd;font-weight:bold;cursor:pointer;font-size:11px}
+.notice{color:#cbd5e1;font-size:12px;line-height:1.7;margin-top:12px}
+.notice strong{color:#c4b5fd}
+.admin-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.admin-button{display:block;text-decoration:none;padding:13px 8px;border-radius:11px;color:white;font-weight:800;font-size:12px;transition:.2s}
+.admin-button:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.wa{background:linear-gradient(110deg,#0f766e,#14b8a6)}.tg{background:linear-gradient(110deg,#2563eb,#38bdf8)}
+.back-button{margin-top:13px;padding:12px;width:100%;background:transparent;border:1px solid #45496d;color:#e2e8f0;border-radius:10px;cursor:pointer}
+.locked{display:none;text-align:center;padding:20px 0}
+.locked h2{color:#fca5a5;margin-bottom:10px}
+.locked p{color:#cbd5e1;font-size:13px;line-height:1.7}
+@media(max-width:360px){.container{padding:17px}.brand{font-size:19px}.engine-option label{font-size:12px}}
+
+.feature-button{width:100%;margin-top:8px;padding:10px 5px;border:1px solid rgba(56,189,248,.55);border-radius:10px;background:linear-gradient(110deg,rgba(139,92,246,.22),rgba(56,189,248,.16));color:#dbeafe;font-size:10px;font-weight:900;letter-spacing:.4px;cursor:pointer;transition:.2s}
+.feature-button:hover{transform:translateY(-1px);filter:brightness(1.2);border-color:var(--blue)}
+.feature-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,4,16,.78);backdrop-filter:blur(8px);padding:18px;align-items:center;justify-content:center}
+.feature-modal.show{display:flex}
+.feature-card{width:100%;max-width:430px;max-height:85vh;overflow:auto;border:1px solid rgba(56,189,248,.55);border-radius:20px;padding:21px;background:linear-gradient(145deg,#171832,#080918);box-shadow:0 0 35px rgba(56,189,248,.18);animation:rise .25s ease both}
+.feature-card h2{text-align:center;font-size:20px;letter-spacing:1px;margin-bottom:6px;background:linear-gradient(90deg,#c4b5fd,#7dd3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.feature-caption{text-align:center;color:var(--muted);font-size:11px;margin-bottom:18px}
+.feature-group{margin-top:15px;padding:13px;border:1px solid #303454;border-radius:12px;background:rgba(255,255,255,.025)}
+.feature-group h3{font-size:12px;color:#7dd3fc;letter-spacing:1px;margin-bottom:9px}
+.feature-list{list-style:none;display:grid;gap:8px}
+.feature-list li{font-size:12px;line-height:1.5;color:#e2e8f0;padding-left:20px;position:relative}
+.feature-list li:before{content:'✦';position:absolute;left:0;color:#a78bfa}
+.feature-close{width:100%;margin-top:16px;padding:13px;border:0;border-radius:11px;background:linear-gradient(100deg,#8b5cf6,#3b82f6,#38bdf8);color:white;font-weight:900;cursor:pointer}
+.feature-note{font-size:10px;line-height:1.5;color:#9ca3c8;margin-top:12px;text-align:center}
+@media(max-width:360px){.feature-button{font-size:9px;padding:9px 2px}.feature-card{padding:16px}}
+</style>
+
+<style id="engine-price-animations">
+.price-pop { animation: priceFade .22s ease-out both; }
+.engine-selected-anim { animation: engineTap .18s ease-out both; }
+@keyframes priceFade {
+  from { opacity:.75; transform:translateY(3px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes engineTap {
+  from { transform:scale(.99); }
+  to { transform:scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price-pop,.engine-selected-anim { animation:none !important; }
+}
+</style>
+
+
+<style id="engine-price-switch-motion">
+.price-switch-motion {
+  animation: priceSwitchNudge .24s ease-out both;
+}
+@keyframes priceSwitchNudge {
+  0% { opacity: .82; transform: translateY(3px); }
+  70% { opacity: 1; transform: translateY(-1px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price-switch-motion { animation: none !important; }
+}
+</style>
+
+
+<style id="smooth-background-motion">
+/* Latar belakang bergerak sangat halus, tanpa glow atau gerakan elemen produk */
+body {
+  background-size: 180% 180%;
+  animation: sansxdBackgroundDrift 28s ease-in-out infinite alternate;
+}
+@keyframes sansxdBackgroundDrift {
+  0%   { background-position: 0% 45%; }
+  50%  { background-position: 100% 55%; }
+  100% { background-position: 0% 60%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none !important; }
+}
+</style>
+
+
+<style id="smooth-background-layer">
+body { position: relative; isolation: isolate; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 25%, rgba(92, 74, 160, .07), transparent 42%),
+    radial-gradient(ellipse at 82% 70%, rgba(50, 95, 150, .06), transparent 45%);
+  transform: translate3d(0, 0, 0);
+  animation: sansxdAmbientDrift 32s ease-in-out infinite alternate;
+}
+@keyframes sansxdAmbientDrift {
+  0% { transform: translate3d(-1%, -0.5%, 0) scale(1); }
+  100% { transform: translate3d(1%, 0.5%, 0) scale(1.025); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none !important; }
+}
+</style>
+
+
+<style id="premium-ui-refresh">
+:root{--purple:#9b7bff;--blue:#54d8ff;--white:#f6f7ff;--black:#070914;--panel:#11152b;--muted:#a6b0d0}
+html{scroll-behavior:smooth} body{position:relative;isolation:isolate;padding:24px 14px;background:radial-gradient(ellipse at 8% 8%,rgba(119,79,255,.28),transparent 32%),radial-gradient(ellipse at 95% 24%,rgba(0,198,255,.18),transparent 30%),radial-gradient(ellipse at 50% 100%,rgba(110,55,220,.16),transparent 35%),#070914; background-attachment:fixed}
+body:before,body:after{content:"";position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(70px);opacity:.22}body:before{width:190px;height:190px;top:10%;left:-90px;background:#7c3aed}body:after{width:210px;height:210px;right:-100px;bottom:8%;background:#06b6d4}
+.container{max-width:490px;padding:clamp(19px,5vw,29px);border-radius:30px;background:linear-gradient(150deg,rgba(19,23,48,.94),rgba(8,10,25,.97));border:1px solid rgba(164,174,255,.22);box-shadow:0 28px 80px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.025) inset;backdrop-filter:blur(22px)}
+.container:before{opacity:.65;border-radius:30px}.brand{position:relative;overflow:hidden;padding:22px 14px;margin-bottom:22px;border-radius:21px;background:linear-gradient(120deg,rgba(139,92,246,.22),rgba(56,189,248,.12) 65%,rgba(255,255,255,.035));border:1px solid rgba(176,190,255,.18);font-size:clamp(23px,6vw,29px);letter-spacing:2px;text-shadow:0 4px 25px rgba(56,189,248,.28)}.brand:after{content:"";position:absolute;top:-80%;left:-35%;width:35%;height:260%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);animation:brandShine 7s ease-in-out infinite}@keyframes brandShine{0%,65%{left:-40%}100%{left:130%}}
+.brand span{font-size:10px;letter-spacing:5px;margin-top:7px}h1{font-size:clamp(21px,5vw,25px);letter-spacing:2.5px;margin-bottom:9px}.subtitle{max-width:290px;margin:0 auto 25px;line-height:1.8;font-size:11px;letter-spacing:.35px}.section-title{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:1.8px;margin:22px 0 12px;color:#c9bdff}.section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(139,92,246,.45),transparent)}
+.engine-options{gap:11px}.engine-option{min-width:0;padding:5px;border-radius:19px;background:linear-gradient(150deg,rgba(255,255,255,.045),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.055)}.engine-option label{min-height:76px;display:flex;align-items:center;justify-content:center;padding:14px 7px;border-radius:14px;border-color:rgba(151,163,220,.19);background:linear-gradient(145deg,rgba(34,39,75,.85),rgba(13,17,38,.92));font-size:12px;letter-spacing:.35px;line-height:1.6}.engine-option label:hover{border-color:rgba(84,216,255,.65);box-shadow:0 8px 22px rgba(0,0,0,.2)}.engine-option input:checked+label{border-color:rgba(84,216,255,.85);background:linear-gradient(135deg,rgba(124,58,237,.4),rgba(14,165,233,.22));box-shadow:0 0 0 1px rgba(84,216,255,.12),0 8px 24px rgba(56,189,248,.09)}
+.feature-button{min-height:39px;margin-top:9px;padding:9px 4px;border-radius:11px;background:linear-gradient(110deg,rgba(139,92,246,.18),rgba(56,189,248,.09));border-color:rgba(139,92,246,.35);font-size:9px;letter-spacing:.65px;line-height:1.5}.feature-button:active,.buy-button:active,.feature-close:active{transform:scale(.98)}
+#plansPanel{margin-top:22px;padding-top:2px}.plans{gap:10px}.plan label{min-height:76px;display:flex;flex-direction:column;justify-content:center;border-radius:15px;background:linear-gradient(145deg,rgba(24,29,58,.9),rgba(12,15,34,.95));border-color:rgba(151,163,220,.17)}.plan input:checked+label{border-color:rgba(167,139,250,.85);box-shadow:0 0 0 1px rgba(167,139,250,.12),0 8px 22px rgba(139,92,246,.1)}.plan-name{font-size:12px;letter-spacing:.5px}.price{font-size:14px;margin-top:1px}.buy-button{min-height:53px;margin-top:20px;border-radius:15px;background:linear-gradient(105deg,#8157f4,#5968f4 52%,#21bce8);box-shadow:0 12px 30px rgba(72,99,240,.24);letter-spacing:1.2px}.payment{margin-top:25px;padding-top:24px}.payment h2{font-size:clamp(18px,5vw,22px)}.payment-info{padding:13px 15px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.035);line-height:2.1}.method-button{min-height:44px;border-radius:12px;background:rgba(255,255,255,.035);border-color:rgba(151,163,220,.2)}.method-panel{border-radius:15px;background:rgba(7,8,22,.48);border-color:rgba(151,163,220,.16)}.timer-box{border-radius:14px;padding:14px}.admin-button{border-radius:13px;text-align:center;padding:14px 7px}.back-button{min-height:45px;border-radius:13px;border-color:rgba(151,163,220,.25)}.footer{font-size:9px;letter-spacing:2.4px;margin-top:25px;color:#7e89b3}
+.feature-modal{background:rgba(3,5,18,.82);backdrop-filter:blur(16px);padding:14px}.feature-card{max-width:440px;padding:clamp(19px,5vw,26px);border-radius:25px;border:1px solid rgba(160,174,255,.28);background:linear-gradient(150deg,rgba(23,27,57,.98),rgba(8,10,25,.99));box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 45px rgba(100,90,255,.12)}.feature-card h2{font-size:23px;letter-spacing:1.4px}.feature-caption{font-size:12px;line-height:1.7}.feature-group{padding:15px;border-radius:15px;border-color:rgba(151,163,220,.17);background:linear-gradient(135deg,rgba(139,92,246,.07),rgba(56,189,248,.035))}.feature-group h3{font-size:11px;letter-spacing:1.5px;margin-bottom:12px}.feature-list{gap:9px}.feature-list li{padding:9px 10px 9px 29px;border-radius:10px;background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.035);font-size:12px}.feature-list li:before{content:'✓';left:10px;top:8px;color:#6ee7f9;font-weight:900}.feature-close{min-height:48px;border-radius:14px;letter-spacing:1px;background:linear-gradient(105deg,#8157f4,#5968f4 52%,#21bce8);box-shadow:0 10px 24px rgba(72,99,240,.2)}.feature-note{line-height:1.7;font-size:10px}
+input:focus-visible+label,button:focus-visible,a:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(max-width:360px){body{padding:13px 9px}.container{padding:16px;border-radius:24px}.engine-options{gap:7px}.engine-option{padding:4px}.engine-option label{font-size:10px;min-height:70px}.feature-button{font-size:8px;letter-spacing:0}.brand{font-size:21px}.feature-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+
+</head>
+<body>
+<div class="container">
+  <div class="brand">SANSXD STORE <span>8 BALL POOL</span></div>
+  <h1>ENGINE STORE</h1>
+  <p class="subtitle">PILIH ENGINE • PILIH DURASI • PILIH METODE PEMBAYARAN</p>
+
+  <div id="store">
+    <p class="section-title">01 / PILIH ENGINE</p>
+    <div class="engine-options">
+      <div class="engine-option"><input type="radio" name="engine" id="ninja" value="NINJA ENGINE" onchange="showPlans()"><label for="ninja">⚡ NINJA ENGINE</label><button type="button" class="feature-button" onclick="showFeatures('ninja')">▤ LIHAT FITUR MOD</button></div>
+      <div class="engine-option"><input type="radio" name="engine" id="samurai" value="SAMURAI ENGINE" onchange="showPlans()"><label for="samurai">✦ SAMURAI ENGINE</label><button type="button" class="feature-button" onclick="showFeatures('samurai')">▤ LIHAT FITUR MOD</button></div>
+    </div>
+
+    <div id="plansPanel">
+      <p class="section-title">02 / PILIH DURASI</p>
+      <div id="ninjaPlans" class="plans" style="display:none">
+        <div class="plan"><input type="radio" name="plan" id="ninja7" value="7 DAY" data-price="40000"><label for="ninja7"><span class="plan-name">7 DAY</span><span class="price">Rp40.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="ninja15" value="15 DAY" data-price="70000"><label for="ninja15"><span class="plan-name">15 DAY</span><span class="price">Rp70.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="ninja30" value="30 DAY" data-price="110000"><label for="ninja30"><span class="plan-name">30 DAY</span><span class="price">Rp110.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="ninjaPerm" value="PERMANEN" data-price="180000"><label for="ninjaPerm"><span class="plan-name">PERMANEN</span><span class="price">Rp180.000</span></label></div>
+      </div>
+      <div id="samuraiPlans" class="plans" style="display:none">
+        <div class="plan"><input type="radio" name="plan" id="samurai7" value="7 DAY" data-price="50000"><label for="samurai7"><span class="plan-name">7 DAY</span><span class="price">Rp50.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="samurai15" value="15 DAY" data-price="80000"><label for="samurai15"><span class="plan-name">15 DAY</span><span class="price">Rp80.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="samurai30" value="30 DAY" data-price="140000"><label for="samurai30"><span class="plan-name">30 DAY</span><span class="price">Rp140.000</span></label></div>
+        <div class="plan"><input type="radio" name="plan" id="samuraiPerm" value="PERMANEN" data-price="200000"><label for="samuraiPerm"><span class="plan-name">PERMANEN</span><span class="price">Rp200.000</span></label></div>
+      </div>
+      <button class="buy-button" onclick="buyProduct()">BELI SEKARANG ↗</button>
+    </div>
+  </div>
+
+  <div class="payment" id="payment">
+    <h2>PILIH METODE PEMBAYARAN</h2>
+    <div class="payment-info"><div>Engine: <b id="selectedProduct"></b></div><div>Durasi: <b id="selectedPlan"></b></div><div>Total: <b id="selectedPrice"></b></div></div>
+    <div class="payment-methods" role="group" aria-label="Metode pembayaran">
+      <button class="method-button active" id="methodQrisBtn" onclick="selectPaymentMethod('qris')">QRIS</button>
+      <button class="method-button" id="methodDanaBtn" onclick="selectPaymentMethod('dana')">DANA</button>
+      <button class="method-button" id="methodPaypalBtn" onclick="selectPaymentMethod('paypal')">PAYPAL</button>
+    </div>
+    <div class="timer-box" id="timerBox">Selesaikan pembayaran dalam <span id="countdown">05:00</span></div>
+    <div id="qrisPanel" class="method-panel active">
+      <h3>PEMBAYARAN QRIS</h3>
+      <img id="qrisImage" class="qris-image" alt="QRIS pembayaran">
+      <p id="qrisMessage" class="notice">Tambahkan gambar QRIS milikmu dengan nama <strong>qris.png</strong> di folder yang sama dengan index.html.</p>
+      <a id="downloadQris" class="download-button" href="qris.png" download="qris.png">⬇ UNDUH GAMBAR QRIS</a>
+    </div>
+    <div id="danaPanel" class="method-panel">
+      <h3>PEMBAYARAN DANA</h3>
+      <div class="method-detail">Nomor DANA: <strong id="danaNumber">083862955771</strong><br>Nama penerima: <strong>KURNIAWULANDARI</strong></div>
+      <button class="copy-button" onclick="copyText('083862955771')">SALIN NOMOR DANA</button>
+      <p class="notice">Pastikan nama penerima sesuai sebelum mengirim pembayaran.</p>
+    </div>
+    <div id="paypalPanel" class="method-panel">
+      <h3>PEMBAYARAN PAYPAL</h3>
+      <div class="method-detail">PayPal: <strong>@SansXD77</strong></div>
+      <p class="notice">Buka PayPal dan cari akun penerima <strong>@SansXD77</strong>. Periksa detail penerima sebelum membayar.</p>
+    </div>
+    <div id="expiredMessage" class="notice" style="display:none;color:#fca5a5"><strong>WAKTU HABIS.</strong> Sesi pembayaran 5 menit telah berakhir.</div>
+    <p class="notice"><strong>CATATAN:</strong> Jika sudah membayar, klik salah satu admin di bawah (WA atau TG), lalu kirim bukti transaksi pembayaran kamu.</p>
+    <div class="admin-buttons">
+      <a class="admin-button wa" id="waLink" href="https://wa.me/6282343071156" target="_blank" rel="noopener">WHATSAPP ADMIN</a>
+      <a class="admin-button tg" id="tgLink" href="https://t.me/Hysansxd" target="_blank" rel="noopener">TELEGRAM ADMIN</a>
+    </div>
+    <button class="back-button" onclick="backToStore()">KEMBALI KE TOKO</button>
+  </div>
+
+  <div class="locked" id="locked">
+    <h2>⏳ TRANSAKSI DITUNDA</h2>
+    <p>Kamu sudah melewati batas 3 sesi pembayaran yang kedaluwarsa. Pilihan pembayaran dikunci selama 2 jam.<br><br>Coba lagi setelah: <strong id="lockUntil"></strong></p>
+    <button class="back-button" onclick="backToStore()">KEMBALI KE TOKO</button>
+  </div>
+  <p class="footer">SANSXD STORE • 8BP</p>
+</div>
+
+  <div class="feature-modal" id="featureModal" role="dialog" aria-modal="true" aria-labelledby="featureTitle" onclick="if(event.target===this)closeFeatures()">
+    <div class="feature-card">
+      <h2 id="featureTitle">FITUR MOD</h2>
+      <p class="feature-caption" id="featureCaption">Detail fitur engine</p>
+      <div id="featureContent"></div>
+      <p class="feature-note">Daftar fitur dan persentase merupakan informasi/klaim dari penjual, bukan jaminan hasil atau bebas dari sanksi game.</p>
+      <button type="button" class="feature-close" onclick="closeFeatures()">TUTUP ✕</button>
+    </div>
+  </div>
+<script>
+
+const engineFeatures = {
+ ninja: {
+  title: 'NINJA ENGINE',
+  features: ['AUTO PLAY','AUTO QUEUE','LINE PREDICTION','HUMAN MODE','FAST MODE'],
+  benefits: ['ANTI BANNED 98%','ANTI LAWAN SESAMA CHEAT 80%','LIGA TETAP JALAN','ANTI BUG','AKURASI 100%','BISA LOGIN FB DAN GOOGLE','SEMUA HP BISA (ANDROID)']
+ },
+ samurai: {
+  title: 'SAMURAI ENGINE',
+  features: ['AUTO PLAY','AUTO QUEUE','LINE PREDICTION','LINE SMOOTH','SKIN CUE','SKIN TABLE','FULL SKIN EFEK','MODE HUMAN','MODE FAST','GOLDEN SHOT AKURAT'],
+  benefits: ['ANTI BANNED 100%','ANTI SERVER CHEAT 95%','LIGA TETAP JALAN','ANTI BUG','SEMUA HP SUPPORT (ANDROID)','BISA LOGIN FB DAN GOOGLE','BISA MABAT SAMA TEMAN','PUSH COIN GAMPANG','100% AKURASI']
+ }
+};
+function showFeatures(engine){
+ const data=engineFeatures[engine]; if(!data)return;
+ document.getElementById('featureTitle').textContent=data.title;
+ document.getElementById('featureCaption').textContent='FITUR DAN KELEBIHAN';
+ const list=(items)=>items.map(item=>'<li>'+item.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</li>').join('');
+ document.getElementById('featureContent').innerHTML='<section class="feature-group"><h3>FITUR</h3><ul class="feature-list">'+list(data.features)+'</ul></section><section class="feature-group"><h3>KELEBIHAN</h3><ul class="feature-list">'+list(data.benefits)+'</ul></section>';
+ document.getElementById('featureModal').classList.add('show');
+ document.body.style.overflow='hidden';
+}
+function closeFeatures(){document.getElementById('featureModal').classList.remove('show');document.body.style.overflow='';}
+document.addEventListener('keydown',function(event){if(event.key==='Escape')closeFeatures();});
+
+const QRIS_IMAGE = "qris.png";
+const TELEGRAM_URL = "https://t.me/Hysansxd";
+const WA_URL = "https://wa.me/6282343071156";
+const SESSION_KEY = "sansxd_qris_attempts";
+const LOCK_KEY = "sansxd_qris_lock_until";
+const DURATION_MS = 5 * 60 * 1000;
+const LOCK_MS = 2 * 60 * 60 * 1000;
+let timerInterval = null;
+let paymentDeadline = 0;
+let currentOrder = null;
+
+function formatRupiah(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n)}
+function showPlans(){
+ const engine=document.querySelector('input[name="engine"]:checked').value;
+ document.getElementById("plansPanel").style.display="block";
+ document.getElementById("ninjaPlans").style.display=engine==="NINJA ENGINE"?"grid":"none";
+ document.getElementById("samuraiPlans").style.display=engine==="SAMURAI ENGINE"?"grid":"none";
+ document.querySelectorAll('input[name="plan"]').forEach(input=>input.checked=false);
+}
+function selectPaymentMethod(method){
+ const methods=['qris','dana','paypal'];
+ methods.forEach(name=>{
+  document.getElementById(name+'Panel').classList.toggle('active',name===method);
+  document.getElementById('method'+name.charAt(0).toUpperCase()+name.slice(1)+'Btn').classList.toggle('active',name===method);
+ });
+}
+function copyText(value){
+ if(navigator.clipboard && window.isSecureContext){
+  navigator.clipboard.writeText(value).then(()=>alert('Berhasil disalin: '+value)).catch(()=>prompt('Salin teks berikut:',value));
+ }else{prompt('Salin teks berikut:',value)}
+}
+function getAttempts(){return Number(localStorage.getItem(SESSION_KEY)||"0")}
+function getLockUntil(){return Number(localStorage.getItem(LOCK_KEY)||"0")}
+function checkLock(){
+ const until=getLockUntil();
+ if(Date.now()<until){
+  document.getElementById("store").style.display="none";
+  document.getElementById("payment").style.display="none";
+  document.getElementById("locked").style.display="block";
+  document.getElementById("lockUntil").textContent=new Date(until).toLocaleString("id-ID");
+  return true;
+ }
+ if(until){localStorage.removeItem(LOCK_KEY);localStorage.removeItem(SESSION_KEY)}
+ document.getElementById("locked").style.display="none";
+ document.getElementById("store").style.display="block";
+ return false;
+}
+function buyProduct(){
+ if(checkLock())return;
+ const engine=document.querySelector('input[name="engine"]:checked');
+ const selected=document.querySelector('input[name="plan"]:checked');
+ if(!engine){alert("Silakan pilih NINJA ENGINE atau SAMURAI ENGINE.");return}
+ if(!selected){alert("Silakan pilih durasi paket terlebih dahulu.");return}
+ currentOrder={engine:engine.value,plan:selected.value,price:Number(selected.dataset.price)};
+ document.getElementById("selectedProduct").textContent=currentOrder.engine;
+ document.getElementById("selectedPlan").textContent=currentOrder.plan;
+ document.getElementById("selectedPrice").textContent=formatRupiah(currentOrder.price);
+ const msg=encodeURIComponent("Halo Admin, saya sudah membayar pesanan "+currentOrder.engine+" - "+currentOrder.plan+" ("+formatRupiah(currentOrder.price)+"). Saya akan mengirim bukti transaksi.");
+ document.getElementById("waLink").href=WA_URL+"?text="+msg;
+ document.getElementById("tgLink").href=TELEGRAM_URL;
+ document.getElementById("store").style.display="none";
+ document.getElementById("locked").style.display="none";
+ document.getElementById("payment").style.display="block";
+ document.getElementById("expiredMessage").style.display="none";
+ document.getElementById("timerBox").style.display="block";
+ selectPaymentMethod("qris");
+ const image=document.getElementById("qrisImage"),message=document.getElementById("qrisMessage");
+ image.style.display="none";message.style.display="block";
+ image.onload=()=>{image.style.display="block";message.style.display="none"};
+ image.onerror=()=>{image.style.display="none";message.style.display="block";message.innerHTML='Gambar QRIS belum ditemukan. Tambahkan file <strong>qris.png</strong> di folder yang sama dengan index.html.'};
+ image.src=QRIS_IMAGE;
+ paymentDeadline=Date.now()+DURATION_MS;
+ clearInterval(timerInterval);
+ updateTimer();
+ timerInterval=setInterval(updateTimer,1000);
+}
+function updateTimer(){
+ const remaining=paymentDeadline-Date.now();
+ if(remaining<=0){expirePayment();return}
+ const mins=Math.floor(remaining/60000);
+ const secs=Math.floor((remaining%60000)/1000);
+ document.getElementById("countdown").textContent=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
+}
+function expirePayment(){
+ clearInterval(timerInterval);
+ document.getElementById("qrisImage").style.display="none";
+ document.getElementById("qrisMessage").style.display="none";
+ document.getElementById("timerBox").style.display="none";
+ document.querySelectorAll(".method-panel").forEach(panel=>panel.classList.remove("active"));
+ document.getElementById("expiredMessage").style.display="block";
+ let attempts=getAttempts()+1;
+ if(attempts>=3){
+  localStorage.setItem(SESSION_KEY,"3");
+  const until=Date.now()+LOCK_MS;
+  localStorage.setItem(LOCK_KEY,String(until));
+  document.getElementById("payment").style.display="none";
+  checkLock();
+ }else{
+  localStorage.setItem(SESSION_KEY,String(attempts));
+ }
+}
+function backToStore(){
+ clearInterval(timerInterval);
+ document.getElementById("payment").style.display="none";
+ document.getElementById("locked").style.display="none";
+ document.getElementById("store").style.display="block";
+}
+checkLock();
+</script>
+
+<script id="engine-price-animation-script">
+(() => {
+  const priceWords = /Rp\s?[\d.]+|NINJA ENGINE|SAMURAI ENGINE|7 DAY|15 DAY|30 DAY|PERMANEN/i;
+  function animateNode(node) {
+    if (!(node instanceof Element)) return;
+    const candidates = [node, ...node.querySelectorAll('*')].slice(0, 250);
+    candidates.forEach(el => {
+      if (!el.isConnected) return;
+      const txt = (el.innerText || el.textContent || '').trim();
+      if (!txt || txt.length > 500 || !priceWords.test(txt) || el.children.length > 8) return;
+      el.classList.remove('price-pop', 'engine-selected-anim');
+      void el.offsetWidth;
+      el.classList.add('price-pop');
+      if (/Rp\s?[\d.]+/.test(txt)) 
+    });
+  }
+  function setup() {
+    if (!document.body) return;
+    const observer = new MutationObserver(records => {
+      const changed = new Set();
+      records.forEach(record => {
+        if (record.target instanceof Element) changed.add(record.target);
+        record.addedNodes && record.addedNodes.forEach(n => { if (n instanceof Element) changed.add(n); });
+      });
+      changed.forEach(animateNode);
+    });
+    observer.observe(document.body, {subtree:true, childList:true, characterData:true});
+    document.addEventListener('change', event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (/engine|product|duration|plan/i.test([target.id,target.name,target.className].join(' '))) {
+        const container = target.closest('label,button,.engine-card,.product-card') || target;
+        container.classList.remove('engine-selected-anim');
+        void container.offsetWidth;
+        container.classList.add('engine-selected-anim');
+        setTimeout(() => animateNode(document.body), 30);
+      }
+    }, true);
+    document.addEventListener('click', event => {
+      const target = event.target instanceof Element ? event.target.closest('button,label,[role="button"]') : null;
+      if (!target || !/NINJA|SAMURAI|ENGINE/i.test((target.innerText || '').trim())) return;
+      target.classList.remove('engine-selected-anim');
+      void target.offsetWidth;
+      target.classList.add('engine-selected-anim');
+      setTimeout(() => animateNode(document.body), 30);
+    }, true);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup);
+  else setup();
+})();
+</script>
+
+
+<script id="engine-price-switch-motion-script">
+(() => {
+  let lastEngine = "";
+  const enginePattern = /NINJA\s*ENGINE|SAMURAI\s*ENGINE/i;
+  const pricePattern = /Rp\s?[\d.]+/i;
+
+  function selectedEngine() {
+    const checked = document.querySelector('input[type="radio"]:checked');
+    if (checked) {
+      const label = checked.closest('label') || (checked.id ? document.querySelector('label[for="' + CSS.escape(checked.id) + '"]') : null);
+      const text = ((label && label.innerText) || checked.value || checked.name || "").toUpperCase();
+      if (enginePattern.test(text)) return text.match(enginePattern)[0];
+    }
+    const bodyText = document.body ? document.body.innerText.toUpperCase() : "";
+    const ninja = bodyText.indexOf("NINJA ENGINE");
+    const samurai = bodyText.indexOf("SAMURAI ENGINE");
+    // Avoid guessing from page text; event handler below identifies clicks.
+    return "";
+  }
+
+  function animatePriceArea() {
+    const nodes = Array.from(document.querySelectorAll('body *')).filter(el => {
+      if (el.children.length > 8) return false;
+      const txt = (el.innerText || "").trim();
+      return txt.length > 0 && txt.length < 700 && pricePattern.test(txt);
+    });
+    // Prefer the smallest price containers, not individual nested text spans.
+    const targets = nodes.filter(el => !Array.from(el.children).some(child => {
+      const t = (child.innerText || "").trim();
+      return t.length > 0 && t.length < 700 && pricePattern.test(t);
+    }));
+    (targets.length ? targets : nodes).slice(0, 12).forEach(el => {
+      el.classList.remove("price-switch-motion");
+      void el.offsetWidth;
+      el.classList.add("price-switch-motion");
+    });
+  }
+
+  document.addEventListener("click", event => {
+    const target = event.target instanceof Element ? event.target.closest("button,label,[role='button'],.engine-card,.product-card") : null;
+    if (!target) return;
+    const text = (target.innerText || target.textContent || "").toUpperCase();
+    const match = text.match(enginePattern);
+    if (!match) return;
+    const engine = match[0].replace(/\s+/g, " ");
+    if (engine !== lastEngine) {
+      lastEngine = engine;
+      setTimeout(animatePriceArea, 40);
+      setTimeout(animatePriceArea, 160);
+    }
+  }, true);
+
+  document.addEventListener("change", event => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const label = target.closest("label") || (target.id ? document.querySelector('label[for="' + CSS.escape(target.id) + '"]') : null);
+    const text = ((label && label.innerText) || target.value || "").toUpperCase();
+    const match = text.match(enginePattern);
+    if (match) {
+      const engine = match[0].replace(/\s+/g, " ");
+      if (engine !== lastEngine) {
+        lastEngine = engine;
+        setTimeout(animatePriceArea, 40);
+        setTimeout(animatePriceArea, 160);
+      }
+    }
+  }, true);
+})();
+</script>
+
+</body>
+</html>
